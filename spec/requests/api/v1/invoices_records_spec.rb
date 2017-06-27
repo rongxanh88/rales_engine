@@ -25,16 +25,52 @@ RSpec.describe 'invoices_records_api', type: :request do
       expect(result["status"]).to eq(invoice.status)
     end
 
-    it 'returns a find' do
-      # GET /api/v1/invoices/find?parameters
-    end
-
-    it 'returns a find all' do
-
-    end
-
     it 'returns a random record' do
+      5.times do |n|
+        create(:invoice, status: "waiting on #{n} items")
+      end
 
+      get '/api/v1/invoices/random.json'
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["status"]).to be_a(String)
+    end
+  end
+
+  context 'returns a record using find' do
+    it 'returns a find using id' do
+      invoice = create(:invoice, status: "pending")
+
+      get '/api/v1/invoices/find', params: {id: invoice.id}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["status"]).to eq(invoice.status)
+    end
+
+    it 'returns a find using name' do
+      invoice = create(:invoice, status: "pending")
+
+      get '/api/v1/invoices/find', params: {status: "pending"}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["status"]).to eq(invoice.status)
+    end
+  end
+
+  context 'returns multiple records using find_all' do
+    it 'returns a find all' do
+      3.times do
+        create(:invoice, status: "pending")
+      end
+
+      get '/api/v1/invoices/find_all', params: {status: "pending"}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result.count).to eq(3)
     end
   end
 

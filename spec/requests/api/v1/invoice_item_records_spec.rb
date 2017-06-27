@@ -25,16 +25,52 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
       expect(result["unit_price"]).to eq(invoice_item.unit_price)
     end
 
-    it 'returns a find' do
-      # GET /api/v1/invoice_items/find?parameters
-    end
-
-    it 'returns a find all' do
-
-    end
-
     it 'returns a random record' do
+      5.times do |n|
+        create(:invoice_item, quantity: n)
+      end
 
+      get '/api/v1/invoice_items/random.json'
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["quantity"]).to be_a(Integer)
+    end
+  end
+
+  context 'returns a record using find' do
+    it 'returns a find using id' do
+      invoice_item = create(:invoice_item, quantity: 15)
+
+      get '/api/v1/invoice_items/find', params: {id: invoice_item.id}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["quantity"]).to eq(invoice_item.quantity)
+    end
+
+    it 'returns a find using name' do
+      invoice_item = create(:invoice_item, quantity: 15)
+
+      get '/api/v1/invoice_items/find', params: {quantity: 15}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["quantity"]).to eq(invoice_item.quantity)
+    end
+  end
+
+  context 'returns multiple records using find_all' do
+    it 'returns a find all' do
+      3.times do
+        create(:invoice_item, quantity: 15)
+      end
+
+      get '/api/v1/invoices/find_all', params: {quantity: 15}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result.count).to eq(3)
     end
   end
 
