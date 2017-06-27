@@ -13,8 +13,8 @@ Rails.application.routes.draw do
       namespace :invoices do
         get '',           to: 'invoices#index'
         get ':id',        to: 'invoices#show'
-        get 'find_all?',  to: 'find#index'
-        get 'find?',      to: 'find#show'
+        get 'find_all',  to: 'find#index'
+        get 'find',      to: 'find#show'
       end
     end
   end
