@@ -11,8 +11,8 @@ RSpec.describe 'invoices_records_api', type: :request do
 
       expect(response).to have_http_status(200)
       expect(result.count).to eq(2)
-      expect(result.first["status"]).to eq(merchant1.status)
-      expect(result.last["status"]).to eq(merchant2.status)
+      expect(result.first["status"]).to eq(invoice1.status)
+      expect(result.last["status"]).to eq(invoice2.status)
     end
 
     it 'returns a single record' do
@@ -22,7 +22,7 @@ RSpec.describe 'invoices_records_api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result["status"]).to eq(merchant.status)
+      expect(result["status"]).to eq(invoice.status)
     end
 
     it 'returns a find' do
