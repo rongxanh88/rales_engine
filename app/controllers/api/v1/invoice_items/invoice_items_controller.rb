@@ -1,9 +1,9 @@
 class Api::V1::InvoiceItems::InvoiceItemsController < ApplicationController
   def index
-    render json: Invoice_Item.all
+    render json: InvoiceItem.all
   end
 
   def show
-    render json: Invoice_Item.find(params[:id])
+    render json: InvoiceItem.find(params[:id])
   end
 end

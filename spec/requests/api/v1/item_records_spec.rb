@@ -11,8 +11,8 @@ RSpec.describe 'item_records_api', type: :request do
 
       expect(response).to have_http_status(200)
       expect(result.count).to eq(2)
-      expect(result.first["status"]).to eq(item1.status)
-      expect(result.last["status"]).to eq(item2.status)
+      expect(result.first["name"]).to eq(item1.name)
+      expect(result.last["name"]).to eq(item2.name)
     end
 
     it 'returns a single record' do
@@ -22,7 +22,7 @@ RSpec.describe 'item_records_api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result["status"]).to eq(item.status)
+      expect(result["name"]).to eq(item.name)
     end
 
     it 'returns a find' do
