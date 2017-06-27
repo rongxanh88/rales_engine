@@ -25,16 +25,52 @@ RSpec.describe 'item_records_api', type: :request do
       expect(result["name"]).to eq(item.name)
     end
 
-    it 'returns a find' do
-      # GET /api/v1/items/find?parameters
-    end
-
-    it 'returns a find all' do
-
-    end
-
     it 'returns a random record' do
+      5.times do |n|
+        create(:item, name: "item#{n}")
+      end
 
+      get '/api/v1/items/random.json'
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to be_a(String)
+    end
+  end
+
+  context 'returns a record using find' do
+    it 'returns a find using id' do
+      item = create(:item, name: 'Shovel')
+
+      get '/api/v1/items/find', params: {id: item.id}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to eq(item.name)
+    end
+
+    it 'returns a find using name' do
+      item = create(:item, name: 'Shovel')
+
+      get '/api/v1/items/find', params: {name: 'Shovel'}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to eq(item.name)
+    end
+  end
+
+  context 'returns multiple records using find_all' do
+    it 'returns a find all' do
+      3.times do
+        create(:item, name: 'Same Shovel')
+      end
+
+      get '/api/v1/items/find_all', params: {name: 'Same Shovel'}
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result.count).to eq(3)
     end
   end
 
