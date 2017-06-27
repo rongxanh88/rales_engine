@@ -6,7 +6,7 @@ RSpec.describe 'merchant_records_api', type: :request do
       merchant1 = create(:merchant)
       merchant2 = create(:merchant, name: 'Jane Doe')
 
-      get '/api/v1/merchants'
+      get '/api/v1/merchants.json'
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -18,15 +18,21 @@ RSpec.describe 'merchant_records_api', type: :request do
     it 'returns a single record' do
       merchant = create(:merchant)
 
-      get "/api/v1/merchants/#{merchant.id}"
+      get "/api/v1/merchants/#{merchant.id}.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
       expect(result["name"]).to eq(merchant.name)
     end
 
-    it 'returns a find' do
-      # GET /api/v1/merchants/find?parameters
+    it 'returns a find using name' do
+      merchant = create(:merchant, name: 'JaNe dOe')
+
+      get '/api/v1/merchants/find.json', params: {name: 'Jane'} 
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to eq(merchant.name)
     end
 
     it 'returns a find all' do
