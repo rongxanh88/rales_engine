@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-
-      namespace :merchants do
-        get '', to: 'merchants#index'
-        get ':id', to: 'merchants#show'
-        get 'find_all', to: 'find#index'
-        get 'find', to: 'find#show'
-        get 'random', to: 'random#show'
+      resources :merchants, only: [:index, :show], :controller => "merchants/merchants" do
+        collection do
+          get 'find_all', to: 'merchants/find#index'
+          get 'find', to: 'merchants/find#show'
+          get 'random', to: 'merchants/random#show'
+        end
       end
 
       namespace :invoices do
