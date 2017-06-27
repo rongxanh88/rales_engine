@@ -25,32 +25,52 @@ RSpec.describe 'merchant_records_api', type: :request do
       expect(result["name"]).to eq(merchant.name)
     end
 
-    it 'returns a find using name' do
-      skip
-      merchant = create(:merchant, name: 'JaNe dOe')
-      # binding.pry
-      get '/api/v1/merchants/find', params: {name: 'Jane'} 
-      result = JSON.parse(response.body)
-
-      expect(response).to have_http_status(200)
-      expect(result["name"]).to eq(merchant.name)
-    end
-
-    it 'returns a find all' do
-      skip
-    end
-
     it 'returns a random record' do
-      skip
       5.times do |n|
         create(:merchant, name: "merchant#{n}")
       end
       
       get '/api/v1/merchants/random.json'
-      # result = JSON.parse(response.body)
+      result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      # expect(result.count).to eq(1)
+      expect(result["name"]).to be_a(String)
+    end
+  end
+
+  context 'returns a record using find' do
+    it 'returns a find using id' do
+      merchant = create(:merchant, name: 'Jane Doe')
+
+      get '/api/v1/merchants/find', params: {id: merchant.id} 
+      result = JSON.parse(response.body)
+      
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to eq(merchant.name)
+    end
+
+    it 'returns a find using name' do
+      merchant = create(:merchant, name: 'Jane Doe')
+
+      get '/api/v1/merchants/find', params: {name: 'Jane Doe'} 
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to eq(merchant.name)
+    end
+  end
+
+  context 'returns multiple records using find_all' do
+    it 'returns a find all' do
+      3.times do
+        create(:merchant, name: 'same person')
+      end
+
+      get '/api/v1/merchants/find_all', params: {name: 'same person'}
+      result = JSON.parse(response.body)
+      
+      expect(response).to have_http_status(200)
+      expect(result.count).to eq(3)
     end
   end
 
