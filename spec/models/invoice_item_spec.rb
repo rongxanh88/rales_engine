@@ -9,6 +9,7 @@ RSpec.describe InvoiceItem, type: :model do
   end
 
   describe 'relationships' do
-    skip
+    it { belong_to(:item) }
+    it { belong_to(:invoice) }
   end
 end

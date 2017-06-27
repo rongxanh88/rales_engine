@@ -9,6 +9,8 @@ RSpec.describe Item, type: :model do
   end
 
   describe 'relationships' do
-    skip
+    it { belong_to(:merchant) }
+    it { have_many(:invoice_items) }
+    it { have_many(:invoices) }
   end
 end
