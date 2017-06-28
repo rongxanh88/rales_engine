@@ -76,7 +76,7 @@ RSpec.describe 'tranactions_records_api', type: :request do
         create(:transaction)
       end
 
-      get '/api/v1/transactions/find_all', params: {credit_card_number: 1234123412341234}
+      get '/api/v1/transactions/find_all', params: {credit_card_number: "1234123412341234"}
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
