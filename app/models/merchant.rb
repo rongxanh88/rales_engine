@@ -11,9 +11,10 @@ class Merchant < ApplicationRecord
            .group("date")
   end
 
-  def self.revenue_for(merchant_id)
-    Invoice.joins(:invoice_items)
-           .where(merchant_id: merchant_id)
+  def self.revenue_for_merchant(merchant_id)
+    Invoice.joins(:invoice_items, :transactions)
+           .joins(:invoice_items)
+           .where("invoices.merchant_id = ? AND transactions.result = 'success'", merchant_id)
            .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
            .group(:merchant_id)
   end

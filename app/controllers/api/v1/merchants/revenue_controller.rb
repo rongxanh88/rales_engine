@@ -5,6 +5,6 @@ class Api::V1::Merchants::RevenueController < ApplicationController
   end
 
   def show
-    render json: Merchant.revenue_for(params[:merchant_id])
+    render json: Merchant.revenue_for_merchant(params[:merchant_id])
   end
 end

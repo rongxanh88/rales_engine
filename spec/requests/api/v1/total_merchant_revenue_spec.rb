@@ -5,6 +5,7 @@ RSpec.describe 'merchant_records_api', type: :request do
     it 'returns total revenue on date' do
       merchant = create(:merchant)
       invoice = create(:invoice, merchant_id: merchant.id)
+      create(:transaction, invoice_id: invoice.id)
       create(:invoice_item, quantity: 2, unit_price: 2,
         invoice_id: invoice.id
       )
