@@ -34,7 +34,7 @@ RSpec.describe 'tranactions_records_api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result["credit_card_number"]).to be_a(Integer)
+      expect(result["credit_card_number"]).to be_a(String)
     end
   end
 
