@@ -28,9 +28,9 @@ Rails.application.routes.draw do
           get 'find_all', to: 'items/find#index'
           get 'find',     to: 'items/find#show'
           get 'random',   to: 'items/random#show'
-          get 'most_revenue', to: 'business#show'
-          get 'most_items',   to: 'business#index'
-          get 'best_day',     to: 'best#show'
+          get 'most_revenue', to: 'items/business#show'
+          get 'most_items',   to: 'items/business#index'
+          get 'best_day',     to: 'items/best#show'
         end
       end
 
