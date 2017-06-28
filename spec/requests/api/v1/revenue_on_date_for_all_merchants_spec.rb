@@ -19,7 +19,7 @@ RSpec.describe 'merchant_records_api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result.first["revenue"]).to eq("19.0")
+      expect(result.first["revenue"]).to eq("19.0") #this will be fixed with JSON serializer
     end
   end
 

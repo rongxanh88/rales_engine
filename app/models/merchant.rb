@@ -4,21 +4,9 @@ class Merchant < ApplicationRecord
   has_many :invoices
   has_many :items
 
-  # def self.search_for_one(params)
-  #   query = lower_case(params)
-  #   find_by("LOWER(name) LIKE ?", "%#{query}%")
-  # end
-
-  # def self.search_for_many(params)
-  #   query = lower_case(params)
-  #   where("LOWER(name) LIKE ?", "%#{query}%")
-  # end
-
-  # private 
-
-  # def self.lower_case(query)
-  #   query.each do |k,v|
-  #     return v.downcase
-  #   end
-  # end
+  def self.revenue_on_date(date)
+    InvoiceItem.where(created_at: (date.beginning_of_day..date.end_of_day))
+               .select("created_at::timestamp::date AS date, SUM(quantity*unit_price) AS revenue")
+               .group("date")
+  end
 end
