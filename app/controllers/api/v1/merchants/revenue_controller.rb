@@ -5,6 +5,11 @@ class Api::V1::Merchants::RevenueController < ApplicationController
   end
 
   def show
-    render json: Merchant.revenue_for_merchant(params[:merchant_id])
+    if params[:date]
+      revenue = Merchant.revenue_for_merchant_by_date(params[:merchant_id], params[:date])
+    else
+      revenue = Merchant.revenue_for_merchant(params[:merchant_id])
+    end
+    render json: revenue
   end
 end
