@@ -26,4 +26,17 @@ class Merchant < ApplicationRecord
            .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
            .group(:merchant_id)
   end
+
+  def self.most_items_sold(quantity)
+    Merchant.joins(
+      "INNER JOIN (" +
+      Invoice.joins(:invoice_items, :transactions)
+             .where("transactions.result = 'success'")
+             .select("SUM(invoice_items.quantity) AS items_sold, invoices.merchant_id")
+             .group("invoices.merchant_id")
+             .order("items_sold DESC")
+             .limit(quantity).to_sql +
+      ") invoices ON merchants.id = invoices.merchant_id"
+    ).order("invoices.items_sold DESC")
+  end
 end

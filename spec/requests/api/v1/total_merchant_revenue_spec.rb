@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant_records_api', type: :request do
+RSpec.describe 'merchant revenue business logic', type: :request do
   context 'merchant exists' do
     it 'returns total revenue' do
       merchant = create(:merchant)
