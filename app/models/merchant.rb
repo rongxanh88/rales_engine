@@ -5,8 +5,9 @@ class Merchant < ApplicationRecord
   has_many :items
 
   def self.revenue_on_date(date)
-    InvoiceItem.where(created_at: (date.beginning_of_day..date.end_of_day))
-               .select("created_at::timestamp::date AS date, SUM(quantity*unit_price) AS revenue")
-               .group("date")
+    Invoice.joins(:invoice_items)
+           .where(created_at: date)
+           .select("invoices.created_at::timestamp::date AS date, SUM(invoice_items.quantity*invoice_items.unit_price) AS total_revenue")
+           .group("date")
   end
 end

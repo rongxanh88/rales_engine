@@ -4,7 +4,7 @@ RSpec.describe 'merchant_records_api', type: :request do
   context 'when the date exists' do
     it 'returns total revenue on date' do
       item = create(:item)
-      invoice = create(:invoice)
+      invoice = create(:invoice, created_at: DateTime.new(2012, 3, 27))
       create(:invoice_item, quantity: 2, unit_price: 2,
         created_at: DateTime.new(2012, 3, 27), item_id: item.id,
         invoice_id: invoice.id
@@ -19,7 +19,7 @@ RSpec.describe 'merchant_records_api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result.first["revenue"]).to eq("19.0") #this will be fixed with JSON serializer
+      expect(result.first["total_revenue"]).to eq("19.0") #this will be fixed with JSON serializer
     end
   end
 
