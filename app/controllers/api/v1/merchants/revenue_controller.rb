@@ -1,10 +1,15 @@
 class Api::V1::Merchants::RevenueController < ApplicationController
-  def show
+  def index
     date = DateTime.parse(params[:date])
-    revenue = InvoiceItem.where(created_at: (date.beginning_of_day..date.end_of_day))
-               .select("created_at::timestamp::date AS date, SUM(quantity*unit_price) AS revenue")
-               .group("date")
-               
+    render json: Merchant.revenue_on_date(date)
+  end
+
+  def show
+    if params[:date]
+      revenue = Merchant.revenue_for_merchant_by_date(params[:merchant_id], params[:date])
+    else
+      revenue = Merchant.revenue_for_merchant(params[:merchant_id])
+    end
     render json: revenue
   end
 end
