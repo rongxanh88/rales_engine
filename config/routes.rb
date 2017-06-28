@@ -43,11 +43,11 @@ Rails.application.routes.draw do
       end
 
       resources :customers, only: [:index, :show], :controller => "customers/customers" do
+        get 'favorite_merchant', to: 'customers/favorite_merchant#show'
         collection do
           get 'find_all', to: 'customers/find#index'
           get 'find',     to: 'customers/find#show'
           get 'random',   to: 'customers/random#show'
-          get 'favorite_merchant', to: 'customers/business#show'
         end
       end
 
