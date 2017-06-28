@@ -4,21 +4,39 @@ class Merchant < ApplicationRecord
   has_many :invoices
   has_many :items
 
-  # def self.search_for_one(params)
-  #   query = lower_case(params)
-  #   find_by("LOWER(name) LIKE ?", "%#{query}%")
-  # end
+  def self.revenue_on_date(date)
+    Invoice.joins(:invoice_items)
+           .where(created_at: date)
+           .select("invoices.created_at::timestamp::date AS date, SUM(invoice_items.quantity*invoice_items.unit_price) AS total_revenue")
+           .group("date")
+  end
 
-  # def self.search_for_many(params)
-  #   query = lower_case(params)
-  #   where("LOWER(name) LIKE ?", "%#{query}%")
-  # end
+  def self.revenue_for_merchant(merchant_id)
+    Invoice.joins(:invoice_items, :transactions)
+           .joins(:invoice_items)
+           .where("invoices.merchant_id = ? AND transactions.result = 'success'", merchant_id)
+           .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+           .group(:merchant_id)
+  end
 
-  # private 
+  def self.revenue_for_merchant_by_date(merchant_id, date)
+    Invoice.joins(:invoice_items, :transactions)
+           .joins(:invoice_items)
+           .where("invoices.merchant_id = ? AND transactions.result = 'success' AND invoices.created_at = ?", merchant_id, date)
+           .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+           .group(:merchant_id)
+  end
 
-  # def self.lower_case(query)
-  #   query.each do |k,v|
-  #     return v.downcase
-  #   end
-  # end
+  def self.most_items_sold(quantity)
+    Merchant.joins(
+      "INNER JOIN (" +
+      Invoice.joins(:invoice_items, :transactions)
+             .where("transactions.result = 'success'")
+             .select("SUM(invoice_items.quantity) AS items_sold, invoices.merchant_id")
+             .group("invoices.merchant_id")
+             .order("items_sold DESC")
+             .limit(quantity).to_sql +
+      ") invoices ON merchants.id = invoices.merchant_id"
+    ).order("invoices.items_sold DESC")
+  end
 end
