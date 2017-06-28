@@ -9,9 +9,9 @@ Rails.application.routes.draw do
             get 'random',   to: 'merchants/random#show'
             get 'most_items', to: 'merchants/item#show'
             get 'revenue',      to: 'merchants/revenue#show'
-            get 'most_revenue', to: 'merchants/revenue#index'
-            get 'favorite_customer',               to: 'merchants/customer#show'
-            get 'customers_with_pending_invoices', to: 'merchants/customer#index'
+            # get 'most_revenue', to: 'merchants/revenue#index'
+            # get 'favorite_customer',               to: 'merchants/customer#show'
+            # get 'customers_with_pending_invoices', to: 'merchants/customer#index'
           end
       end
 
