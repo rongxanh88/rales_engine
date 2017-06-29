@@ -24,13 +24,13 @@ Rails.application.routes.draw do
       end
 
       resources :items, only: [:index, :show], :controller => "items/items" do
+        get 'best_day',     to: 'items/best_day#show'
         collection do
           get 'find_all', to: 'items/find#index'
           get 'find',     to: 'items/find#show'
           get 'random',   to: 'items/random#show'
-          get 'most_revenue', to: 'business#show'
-          get 'most_items',   to: 'business#index'
-          get 'best_day',     to: 'best#show'
+          get 'most_revenue', to: 'items/most_revenue#index'
+          get 'most_items',   to: 'items/most_items#index'
         end
       end
 
