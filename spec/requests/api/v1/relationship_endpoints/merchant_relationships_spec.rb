@@ -5,9 +5,9 @@ RSpec.describe "customer relationships api", type: :request do
     it "returns all items" do
       merchant = create(:merchant)
       invoice = create(:invoice, merchant_id: merchant.id)
-      item_1 = create(:item)
-      item_2 = create(:item)
-      item_3 = create(:item)
+      item_1 = create(:item, merchant_id: merchant.id)
+      item_2 = create(:item, merchant_id: merchant.id)
+      item_3 = create(:item, merchant_id: merchant.id)
       create(:invoice_item, item_id: item_1.id, invoice_id: invoice.id)
       create(:invoice_item, item_id: item_2.id, invoice_id: invoice.id)
       create(:invoice_item, item_id: item_3.id, invoice_id: invoice.id)
@@ -32,7 +32,7 @@ RSpec.describe "customer relationships api", type: :request do
 
       expect(response).to have_http_status(200)
       expect(result.first["id"]).to eq(invoice_1.id)
-      expect(result.last["id"]).to eq(invoice_2.id)
+      expect(result.last["id"]).to eq(invoice_3.id)
       expect(result.count).to eq(3)
     end
   end
