@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628024720) do
+ActiveRecord::Schema.define(version: 20170629180308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,11 +24,11 @@ ActiveRecord::Schema.define(version: 20170628024720) do
 
   create_table "invoice_items", force: :cascade do |t|
     t.bigint "quantity"
-    t.bigint "unit_price"
     t.bigint "item_id"
     t.bigint "invoice_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "unit_price"
     t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
     t.index ["item_id"], name: "index_invoice_items_on_item_id"
   end
@@ -46,10 +46,10 @@ ActiveRecord::Schema.define(version: 20170628024720) do
   create_table "items", force: :cascade do |t|
     t.text "name"
     t.text "description"
-    t.bigint "unit_price"
     t.bigint "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "unit_price"
     t.index ["merchant_id"], name: "index_items_on_merchant_id"
   end
 
