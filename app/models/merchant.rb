@@ -39,8 +39,4 @@ class Merchant < ApplicationRecord
       ") invoices ON merchants.id = invoices.merchant_id"
     ).order("invoices.items_sold DESC")
   end
-
-  def self.formatted_revenue
-    binding.pry
-  end
 end
