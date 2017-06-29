@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'customer_records_api', type: :request do
   context 'when the merchant exists' do
     it 'returns invoices with a status of pending' do
+      skip
       customer = create(:customer)
       merchant = create(:merchant)
       invoice1 = create(:invoice, merchant_id: merchant.id, customer_id: customer.id, status: 'pending')

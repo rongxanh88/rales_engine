@@ -6,7 +6,7 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
       invoice_item1 = create(:invoice_item)
       invoice_item2 = create(:invoice_item, unit_price: 11)
 
-      get '/api/v1/invoice_items'
+      get '/api/v1/invoice_items.json'
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -18,7 +18,7 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
     it 'returns a single record' do
       invoice_item = create(:invoice_item)
 
-      get "/api/v1/invoice_items/#{invoice_item.id}"
+      get "/api/v1/invoice_items/#{invoice_item.id}.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -42,7 +42,7 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
     it 'returns a find using id' do
       invoice_item = create(:invoice_item, quantity: 15)
 
-      get '/api/v1/invoice_items/find', params: {id: invoice_item.id}
+      get '/api/v1/invoice_items/find.json', params: {id: invoice_item.id}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -52,7 +52,7 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
     it 'returns a find using name' do
       invoice_item = create(:invoice_item, quantity: 15)
 
-      get '/api/v1/invoice_items/find', params: {quantity: 15}
+      get '/api/v1/invoice_items/find.json', params: {quantity: 15}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -66,7 +66,7 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
         create(:invoice_item, quantity: 15)
       end
 
-      get '/api/v1/invoices/find_all', params: {quantity: 15}
+      get '/api/v1/invoices/find_all.json', params: {quantity: 15}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)

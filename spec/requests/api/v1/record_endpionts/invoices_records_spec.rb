@@ -6,7 +6,7 @@ RSpec.describe 'invoices_records_api', type: :request do
       invoice1 = create(:invoice)
       invoice2 = create(:invoice, status: 'prepped')
 
-      get '/api/v1/invoices'
+      get '/api/v1/invoices.json'
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -18,7 +18,7 @@ RSpec.describe 'invoices_records_api', type: :request do
     it 'returns a single record' do
       invoice = create(:invoice)
 
-      get "/api/v1/invoices/#{invoice.id}"
+      get "/api/v1/invoices/#{invoice.id}.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -42,7 +42,7 @@ RSpec.describe 'invoices_records_api', type: :request do
     it 'returns a find using id' do
       invoice = create(:invoice, status: "pending")
 
-      get '/api/v1/invoices/find', params: {id: invoice.id}
+      get '/api/v1/invoices/find.json', params: {id: invoice.id}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -52,7 +52,7 @@ RSpec.describe 'invoices_records_api', type: :request do
     it 'returns a find using name' do
       invoice = create(:invoice, status: "pending")
 
-      get '/api/v1/invoices/find', params: {status: "pending"}
+      get '/api/v1/invoices/find.json', params: {status: "pending"}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -66,7 +66,7 @@ RSpec.describe 'invoices_records_api', type: :request do
         create(:invoice, status: "pending")
       end
 
-      get '/api/v1/invoices/find_all', params: {status: "pending"}
+      get '/api/v1/invoices/find_all.json', params: {status: "pending"}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
