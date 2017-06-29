@@ -1,5 +1,5 @@
 class Api::V1::Merchants::RevenueController < ApplicationController
-  def show
+  def index
     date = DateTime.parse(params[:date])
     @revenue = Merchant.revenue_on_date(date)
   end
@@ -10,8 +10,5 @@ class Api::V1::Merchants::RevenueController < ApplicationController
     else
       @revenue = Merchant.revenue_for_merchant(params[:merchant_id])
     end
-  end
-
-  def index
   end
 end

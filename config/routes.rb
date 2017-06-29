@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :merchants, only: [:index, :show], :controller => "merchants/merchants" do
-        get 'revenue',      to: 'merchants/revenue#index'
+        get 'revenue',      to: 'merchants/revenue#show'
         get 'favorite_customer',                to: 'merchants/customer#show'
         get 'customers_with_pending_invoices', to: 'merchants/customer#index'
           collection do
