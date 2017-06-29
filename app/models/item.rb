@@ -28,7 +28,7 @@ class Item < ApplicationRecord
   end
 
   def self.most_revenue(quantity = 5)
-    Item.select("items.*, sum(invoice_items.quantity * invoice_items.unit_price)/100 AS total_revenue")
+    Item.select("items.*, sum(invoice_items.quantity * invoice_items.unit_price::numeric)/100 AS total_revenue")
         .joins(:invoice_items)
         .group("items.id")
         .order("total_revenue DESC")
