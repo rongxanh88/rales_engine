@@ -26,4 +26,9 @@ class Customer < ApplicationRecord
               .limit(1).to_sql +
       ") invoice_transactions ON customers.id = invoice_transactions.customer_id").first
   end
+
+  def self.pending_invoices(merchant_id)
+    Customer.joins("INNER JOIN (" + Invoice.joins("INNER JOIN (SELECT \"transactions\".\"invoice_id\" FROM \"transactions\" WHERE \"transactions\".\"result\" = 'failed' EXCEPT SELECT \"transactions\".\"invoice_id\" FROM \"transactions\" WHERE \"transactions\".\"result\" = 'success') pending_transactions ON pending_transactions.invoice_id = invoices.id")
+    .where("invoices.merchant_id = ?", merchant_id).to_sql + ") invoices ON invoices.customer_id = customers.id")
+  end
 end

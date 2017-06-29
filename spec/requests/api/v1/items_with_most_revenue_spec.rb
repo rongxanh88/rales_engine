@@ -17,7 +17,7 @@ RSpec.describe 'item revenue business logic', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result["revenue"]).to eq("250")
+      expect(result.first["total_revenue"]).to eq("2.5")
     end
 
     it 'returns a set number of entries' do
@@ -35,9 +35,9 @@ RSpec.describe 'item revenue business logic', type: :request do
 
       get "/api/v1/items/most_revenue.json", params: {quantity: quantity}
       result = JSON.parse(response.body)
-
+      
       expect(response).to have_http_status(200)
-      expect(result.first["revenue"]).to eq("250")
+      expect(result.first["total_revenue"]).to eq("2.5")
       expect(result.count).to eq(3)
     end
   end
