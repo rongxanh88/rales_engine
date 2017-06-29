@@ -42,7 +42,7 @@ RSpec.describe 'tranactions_records_api', type: :request do
     it 'returns a find using id' do
       transaction = create(:transaction, credit_card_number: 1234)
 
-      get '/api/v1/transactions/find', params: {id: transaction.id} 
+      get '/api/v1/transactions/find.json', params: {id: transaction.id} 
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
@@ -52,7 +52,7 @@ RSpec.describe 'tranactions_records_api', type: :request do
     it 'returns a find using credit card number' do
       transaction = create(:transaction, credit_card_number: 12)
 
-      get '/api/v1/transactions/find', params: {credit_card_number: 12} 
+      get '/api/v1/transactions/find.json', params: {credit_card_number: 12} 
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -62,7 +62,7 @@ RSpec.describe 'tranactions_records_api', type: :request do
     it 'returns a find using credit card number' do
       transaction = create(:transaction, result: 'success')
 
-      get '/api/v1/transactions/find', params: {result: 'success'} 
+      get '/api/v1/transactions/find.json', params: {result: 'success'} 
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -76,7 +76,7 @@ RSpec.describe 'tranactions_records_api', type: :request do
         create(:transaction)
       end
 
-      get '/api/v1/transactions/find_all', params: {credit_card_number: "1234123412341234"}
+      get '/api/v1/transactions/find_all.json', params: {credit_card_number: "1234123412341234"}
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
