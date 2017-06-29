@@ -13,7 +13,7 @@ RSpec.describe 'merchant revenue business logic', type: :request do
         invoice_id: invoice.id
       )
 
-      get "/api/v1/merchants/#{merchant.id}/revenue"
+      get "/api/v1/merchants/#{merchant.id}/revenue.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -34,7 +34,7 @@ RSpec.describe 'merchant revenue business logic', type: :request do
         invoice_id: good_invoice.id
       )
 
-      get "/api/v1/merchants/#{merchant.id}/revenue", params: {date: date}
+      get "/api/v1/merchants/#{merchant.id}/revenue.json", params: {date: date}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
