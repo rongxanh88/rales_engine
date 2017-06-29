@@ -1,0 +1,1 @@
+json.(@invoice.customer, :id, :first_name, :last_name)

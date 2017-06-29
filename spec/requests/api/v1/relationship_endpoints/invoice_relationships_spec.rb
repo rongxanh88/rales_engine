@@ -52,19 +52,18 @@ RSpec.describe 'invoice relationships api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result.count).to eq(1)
+      expect(result["first_name"]).to eq(customer.first_name)
     end
 
     it 'returns the merchant' do
-      skip
       merchant = create(:merchant)
       invoice = create(:invoice, merchant_id: merchant.id)
 
       get "/api/v1/invoices/#{invoice.id}/merchant.json"
       result = JSON.parse(response.body)
-
+      
       expect(response).to have_http_status(200)
-      expect(result.count).to eq(1)
+      expect(result["name"]).to eq(merchant.name)
     end
   end
 
