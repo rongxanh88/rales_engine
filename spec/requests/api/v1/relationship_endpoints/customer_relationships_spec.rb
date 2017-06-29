@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "customer relationships api", type: :request do
-  contect "when the records exist" do
+  context "when the records exist" do
     it "returns all invoices" do
       customer = create(:customer)
       invoice_1 = create(:invoice, customer_id: customer.id)
@@ -17,7 +17,7 @@ RSpec.describe "customer relationships api", type: :request do
       expect(result.count).to eq(3)
     end
 
-    it "returns all transactions"
+    it "returns all transactions" do
       customer = create(:customer)
       invoice = create(:invoice, customer_id: customer.id)
       transaction_1 = create(:transaction, invoice_id: invoice.id)
@@ -30,5 +30,6 @@ RSpec.describe "customer relationships api", type: :request do
       expect(result.first["id"]).to eq(transaction_1.id)
       expect(result.last["id"]).to eq(transaction_2.id)
       expect(result.count).to eq(2)
+    end
   end
 end
