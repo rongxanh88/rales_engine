@@ -29,7 +29,9 @@ Rails.application.routes.draw do
       end
 
       resources :items, only: [:index, :show], :controller => "items/items" do
-        get 'best_day',     to: 'items/best_day#show'
+        get 'best_day',      to: 'items/best_day#show'
+        get 'invoice_items', to: 'items/invoice_items#index'
+
         collection do
           get 'find_all', to: 'items/find#index'
           get 'find',     to: 'items/find#show'
