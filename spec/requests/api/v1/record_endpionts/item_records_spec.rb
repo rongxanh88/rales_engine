@@ -16,7 +16,6 @@ RSpec.describe 'item_records_api', type: :request do
     end
 
     it 'returns a single record' do
-      skip
       item = create(:item)
 
       get "/api/v1/items/#{item.id}.json"
@@ -73,9 +72,5 @@ RSpec.describe 'item_records_api', type: :request do
       expect(response).to have_http_status(200)
       expect(result.count).to eq(3)
     end
-  end
-
-  context 'when the record does not exists' do
-
   end
 end
