@@ -1,6 +1,6 @@
 class Api::V1::Transactions::TransactionsController < ApplicationController
   def index
-    render json: Transaction.all
+    @transactions = Transaction.all
   end
   
   def show

@@ -1,6 +1,6 @@
 class Api::V1::Merchants::MerchantsController < ApplicationController
   def index
-    render json: Merchant.all
+    @merchants = Merchant.all
   end
   
   def show
