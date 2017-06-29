@@ -4,6 +4,6 @@ class Api::V1::Customers::CustomersController < ApplicationController
   end
   
   def show
-    render json: Customer.find(params[:id].to_i)
+    @customer = Customer.find(params[:id].to_i)
   end
 end
