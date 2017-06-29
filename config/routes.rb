@@ -3,8 +3,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :merchants, only: [:index, :show], :controller => "merchants/merchants" do
         get 'revenue',      to: 'merchants/revenue#show'
-        get 'favorite_customer',                to: 'merchants/customer#show'
-        get 'customers_with_pending_invoices', to: 'merchants/customer#index'
+        get 'favorite_customer',                to: 'merchants/customers#show'
+        get 'customers_with_pending_invoices', to: 'merchants/customers#index'
           collection do
             get 'find_all', to: 'merchants/find#index'
             get 'find',     to: 'merchants/find#show'
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       end
 
       resources :invoice_items, only: [:index, :show], :controller => "invoice_items/invoice_items" do
-        
+
         collection do
           get 'find_all', to: 'invoice_items/find#index'
           get 'find',     to: 'invoice_items/find#show'
