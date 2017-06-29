@@ -51,5 +51,5 @@ class Merchant < ApplicationRecord
       .to_sql +
       ") merchant_revenues ON merchant_revenues.merchant_id = merchants.id")
       .select("merchant_revenues.total_revenue, merchants.*")
-    end
+  end
 end
