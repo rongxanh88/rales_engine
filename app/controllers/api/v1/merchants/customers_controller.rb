@@ -1,12 +1,10 @@
 class Api::V1::Merchants::CustomersController < ApplicationController
 
   def show
-    customer = Customer.favorite_customer(params[:merchant_id])
-    render json: customer
+    render json: Customer.favorite_customer(params[:merchant_id])
   end
 
   def index
-    customer = Customer.pending_invoices(params[:merchant_id])
-    render json: customer
+    render json: Customer.pending_invoices(params[:merchant_id])
   end
 end
