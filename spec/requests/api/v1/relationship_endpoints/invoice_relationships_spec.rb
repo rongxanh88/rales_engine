@@ -29,7 +29,6 @@ RSpec.describe 'invoice relationships api', type: :request do
     end
 
     it 'returns all items' do
-      skip
       invoice = create(:invoice)
       create(:item, id: 1)
       create(:item, id: 2)
@@ -42,9 +41,31 @@ RSpec.describe 'invoice relationships api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result.count).to eq(5)
+      expect(result.count).to eq(3)
     end
 
+    it 'returns the customer' do
+      customer = create(:customer)
+      invoice = create(:invoice, customer_id: customer.id)
+
+      get "/api/v1/invoices/#{invoice.id}/customer.json"
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result.count).to eq(1)
+    end
+
+    it 'returns the merchant' do
+      skip
+      merchant = create(:merchant)
+      invoice = create(:invoice, merchant_id: merchant.id)
+
+      get "/api/v1/invoices/#{invoice.id}/merchant.json"
+      result = JSON.parse(response.body)
+
+      expect(response).to have_http_status(200)
+      expect(result.count).to eq(1)
+    end
   end
 
 
