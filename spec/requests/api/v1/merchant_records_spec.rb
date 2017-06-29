@@ -42,7 +42,7 @@ RSpec.describe 'merchant_records_api', type: :request do
     it 'returns a find using id' do
       merchant = create(:merchant, name: 'Jane Doe')
 
-      get '/api/v1/merchants/find', params: {id: merchant.id} 
+      get '/api/v1/merchants/find.json', params: {id: merchant.id} 
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
@@ -52,7 +52,7 @@ RSpec.describe 'merchant_records_api', type: :request do
     it 'returns a find using name' do
       merchant = create(:merchant, name: 'Jane Doe')
 
-      get '/api/v1/merchants/find', params: {name: 'Jane Doe'} 
+      get '/api/v1/merchants/find.json', params: {name: 'Jane Doe'} 
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -66,7 +66,7 @@ RSpec.describe 'merchant_records_api', type: :request do
         create(:merchant, name: 'same person')
       end
 
-      get '/api/v1/merchants/find_all', params: {name: 'same person'}
+      get '/api/v1/merchants/find_all.json', params: {name: 'same person'}
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)

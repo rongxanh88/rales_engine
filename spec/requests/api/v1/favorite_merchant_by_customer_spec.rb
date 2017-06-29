@@ -12,7 +12,7 @@ RSpec.describe 'favorite merchant for customer', type: :request do
         create(:merchant)
       end
 
-      get "/api/v1/customers/#{customer.id}/favorite_merchant"
+      get "/api/v1/customers/#{customer.id}/favorite_merchant.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
