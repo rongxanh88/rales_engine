@@ -3,29 +3,25 @@ require 'rails_helper'
 RSpec.describe 'invoice_item relationships api', type: :request do
   context 'when the records exists' do
     it 'returns an invoice' do
-      skip
-      item = create(:item)
-      invoice = create(:invoice, item_id: item.id)
+      invoice = create(:invoice)
+      invoice_item = create(:invoice_item, invoice_id: invoice.id)
 
-      get "/api/v1/invoice_items/#{invoice.id}/transactions.json"
+      get "/api/v1/invoice_items/#{invoice_item.id}/invoice.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result.count).to eq(5)
+      expect(result["id"]).to eq(invoice.id)
     end
 
     it 'returns an item' do
-      skip
-      invoice = create(:invoice)
-      5.times do
-        create(:invoice_item, invoice_id: invoice.id)
-      end
+      item = create(:item)
+      invoice_item = create(:invoice_item, item_id: item.id)
 
-      get "/api/v1/invoices/#{invoice.id}/invoice_items.json"
+      get "/api/v1/invoice_items/#{invoice_item.id}/item.json"
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
-      expect(result.count).to eq(5)
+      expect(result["name"]).to eq(item.name)
     end
   end
 
@@ -34,5 +30,3 @@ RSpec.describe 'invoice_item relationships api', type: :request do
 
   end
 end
-# GET /api/v1/invoice_items/:id/invoice returns the associated invoice
-# GET /api/v1/invoice_items/:id/item returns the associated item

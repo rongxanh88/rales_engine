@@ -17,7 +17,7 @@ RSpec.describe 'merchant revenue business logic', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result["revenue"]).to eq("0.19") #this will be fixed with JSON serializer
+      expect(result["revenue"]).to eq("0.19")
     end
 
     it 'returns revenue for merchant on that date' do
