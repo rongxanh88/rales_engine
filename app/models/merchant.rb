@@ -5,9 +5,9 @@ class Merchant < ApplicationRecord
   has_many :items
 
   def self.revenue_on_date(date)
-    Invoice.joins(:invoice_items)
-           .where(created_at: date)
-           .select("invoices.created_at::timestamp::date AS date, SUM(invoice_items.quantity*invoice_items.unit_price) AS total_revenue")
+    Invoice.joins(:invoice_items, :transactions)
+           .where(invoices: {created_at: date}, transactions: {result: 'success'})
+           .select("invoices.created_at::timestamp::date AS date, SUM(invoice_items.quantity*invoice_items.unit_price)/100 AS total_revenue")
            .group("date")
   end
 
@@ -15,7 +15,7 @@ class Merchant < ApplicationRecord
     Invoice.joins(:invoice_items, :transactions)
            .joins(:invoice_items)
            .where("invoices.merchant_id = ? AND transactions.result = 'success'", merchant_id)
-           .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+           .select("SUM(invoice_items.quantity*invoice_items.unit_price)/100 AS revenue")
            .group(:merchant_id)
   end
 
@@ -23,7 +23,7 @@ class Merchant < ApplicationRecord
     Invoice.joins(:invoice_items, :transactions)
            .joins(:invoice_items)
            .where("invoices.merchant_id = ? AND transactions.result = 'success' AND invoices.created_at = ?", merchant_id, date)
-           .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+           .select("SUM(invoice_items.quantity*invoice_items.unit_price)/100 AS revenue")
            .group(:merchant_id)
   end
 

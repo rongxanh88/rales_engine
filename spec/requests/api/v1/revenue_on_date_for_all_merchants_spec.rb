@@ -6,6 +6,7 @@ RSpec.describe 'merchant_records_api', type: :request do
       item = create(:item)
       date = DateTime.new(2012, 3, 27)
       invoice = create(:invoice, created_at: date)
+      create(:transaction, invoice_id: invoice.id)
       create(:invoice_item, quantity: 2, unit_price: 2,
         created_at: date, item_id: item.id,
         invoice_id: invoice.id
@@ -15,11 +16,11 @@ RSpec.describe 'merchant_records_api', type: :request do
         invoice_id: invoice.id
       )
 
-      get '/api/v1/merchants/revenue', params: {date: date}
+      get '/api/v1/merchants/revenue.json', params: {date: date}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result.first["total_revenue"]).to eq("19.0") #this will be fixed with JSON serializer
+      expect(result["total_revenue"]).to eq("0.19")
     end
   end
 

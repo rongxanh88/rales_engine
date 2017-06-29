@@ -4,7 +4,8 @@ class Api::V1::Merchants::CustomerController < ApplicationController
     # favorite_customer
     # returns the customer who has conducted the most total number of successful transactions
     binding.pry
-    Customer.
+    Customer.joins(:transactions, :invoices).where(transactions: {result: "success"})
+    
   end
 
   def index

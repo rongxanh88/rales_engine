@@ -42,7 +42,7 @@ RSpec.describe 'customer_records_api', type: :request do
     it 'returns a find using id' do
       customer = create(:customer, first_name: 'Jane')
 
-      get '/api/v1/customers/find', params: {id: customer.id} 
+      get '/api/v1/customers/find.json', params: {id: customer.id} 
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
@@ -52,7 +52,7 @@ RSpec.describe 'customer_records_api', type: :request do
     it 'returns a find using first name' do
       customer = create(:customer, first_name: 'Jane')
 
-      get '/api/v1/customers/find', params: {first_name: 'Jane'} 
+      get '/api/v1/customers/find.json', params: {first_name: 'Jane'} 
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -62,7 +62,7 @@ RSpec.describe 'customer_records_api', type: :request do
     it 'returns a find using last name' do
       customer = create(:customer, last_name: 'Jane')
 
-      get '/api/v1/customers/find', params: {last_name: 'Jane'} 
+      get '/api/v1/customers/find.json', params: {last_name: 'Jane'} 
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -76,7 +76,7 @@ RSpec.describe 'customer_records_api', type: :request do
         create(:customer, first_name: 'same person')
       end
 
-      get '/api/v1/customers/find_all', params: {first_name: 'same person'}
+      get '/api/v1/customers/find_all.json', params: {first_name: 'same person'}
       result = JSON.parse(response.body)
       
       expect(response).to have_http_status(200)
