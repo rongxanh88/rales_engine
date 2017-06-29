@@ -15,7 +15,7 @@ class Merchant < ApplicationRecord
     Invoice.joins(:invoice_items, :transactions)
            .joins(:invoice_items)
            .where("invoices.merchant_id = ? AND transactions.result = 'success'", merchant_id)
-           .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+           .select("SUM(invoice_items.quantity*invoice_items.unit_price)/100 AS revenue")
            .group(:merchant_id)
   end
 
@@ -23,7 +23,7 @@ class Merchant < ApplicationRecord
     Invoice.joins(:invoice_items, :transactions)
            .joins(:invoice_items)
            .where("invoices.merchant_id = ? AND transactions.result = 'success' AND invoices.created_at = ?", merchant_id, date)
-           .select("SUM(invoice_items.quantity*invoice_items.unit_price) AS revenue")
+           .select("SUM(invoice_items.quantity*invoice_items.unit_price)/100 AS revenue")
            .group(:merchant_id)
   end
 
