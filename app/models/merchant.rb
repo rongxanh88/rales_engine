@@ -27,7 +27,7 @@ class Merchant < ApplicationRecord
            .group(:merchant_id)
   end
 
-  def self.most_items_sold(quantity)
+  def self.most_items_sold(quantity = 5)
     Merchant.joins(
       "INNER JOIN (" +
       Invoice.joins(:invoice_items, :transactions)
@@ -39,4 +39,17 @@ class Merchant < ApplicationRecord
       ") invoices ON merchants.id = invoices.merchant_id"
     ).order("invoices.items_sold DESC")
   end
+
+  def self.top_revenue(quantity = 1)
+    Merchant.joins(
+      "INNER JOIN (" +
+      Invoice.joins(:transactions, :invoice_items).where(transactions: {result: 'success'})
+      .select("invoices.merchant_id, sum(invoice_items.quantity * invoice_items.unit_price)/100 AS total_revenue")
+      .group("invoices.merchant_id")
+      .order("total_revenue DESC")
+      .limit(quantity)
+      .to_sql +
+      ") merchant_revenues ON merchant_revenues.merchant_id = merchants.id")
+      .select("merchant_revenues.total_revenue, merchants.*")
+    end
 end

@@ -3,15 +3,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :merchants, only: [:index, :show], :controller => "merchants/merchants" do
         get 'revenue',      to: 'merchants/revenue#show'
+        get 'favorite_customer',                to: 'merchants/customer#show'
+        get 'customers_with_pending_invoices', to: 'merchants/customer#index'
           collection do
             get 'find_all', to: 'merchants/find#index'
             get 'find',     to: 'merchants/find#show'
             get 'random',   to: 'merchants/random#show'
             get 'most_items', to: 'merchants/most_items#index'
             get 'revenue',      to: 'merchants/revenue#index'
-            # get 'most_revenue', to: 'merchants/revenue#index'
-            # get 'favorite_customer',               to: 'merchants/customer#show'
-            # get 'customers_with_pending_invoices', to: 'merchants/customer#index'
+            get 'most_revenue', to: 'merchants/most_revenue#index'
           end
       end
 
@@ -36,6 +36,7 @@ Rails.application.routes.draw do
           get 'random',   to: 'items/random#show'
           get 'most_revenue', to: 'items/most_revenue#index'
           get 'most_items',   to: 'items/most_items#index'
+          get 'best_day',     to: 'items/best_day#show'
         end
       end
 
