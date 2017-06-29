@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show], :controller => "items/items" do
         get 'best_day',      to: 'items/best_day#show'
         get 'invoice_items', to: 'items/invoice_items#index'
-
+        get 'merchant',      to: 'items/merchants#show'
         collection do
           get 'find_all', to: 'items/find#index'
           get 'find',     to: 'items/find#show'

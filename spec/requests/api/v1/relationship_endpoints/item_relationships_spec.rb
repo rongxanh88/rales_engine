@@ -14,12 +14,21 @@ RSpec.describe 'item relationships api', type: :request do
       expect(response).to have_http_status(200)
       expect(result.count).to eq(5)
     end
-  end
 
+    it 'returns a merchant' do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      get "/api/v1/items/#{item.id}/merchant.json"
+      result = JSON.parse(response.body)
+      
+      expect(response).to have_http_status(200)
+      expect(result["name"]).to eq(merchant.name)
+    end
+  end
 
   context 'when the records do not exists' do
 
   end
 end
-# GET /api/v1/items/:id/invoice_items returns a collection of associated invoice items
 # GET /api/v1/items/:id/merchant returns the associated merchant
