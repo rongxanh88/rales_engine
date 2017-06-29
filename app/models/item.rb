@@ -13,4 +13,17 @@ class Item < ApplicationRecord
            .order("items_sold DESC, best_day DESC")
            .limit(1)
   end
+
+  def self.most_popular_items(quantity)
+    Item.joins(
+      "INNER JOIN (" +
+      Invoice.joins(:invoice_items, :transactions)
+             .where(transactions: {result: 'success'})
+             .select("SUM(invoice_items.quantity) AS total_sold, invoice_items.item_id")
+             .group("item_id")
+             .order("total_sold DESC")
+             .limit(quantity).to_sql +
+      ") items_sold ON items_sold.item_id = items.id"
+    )
+  end
 end
