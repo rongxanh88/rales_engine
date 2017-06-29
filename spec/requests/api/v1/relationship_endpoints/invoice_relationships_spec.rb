@@ -72,5 +72,3 @@ RSpec.describe 'invoice relationships api', type: :request do
 
   end
 end
-# GET /api/v1/invoices/:id/customer returns the associated customer
-# GET /api/v1/invoices/:id/merchant returns the associated merchant
