@@ -6,7 +6,7 @@ RSpec.describe 'item_records_api', type: :request do
       item1 = create(:item)
       item2 = create(:item, name: 'Super Shovel')
 
-      get '/api/v1/items'
+      get '/api/v1/items.json'
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -16,9 +16,10 @@ RSpec.describe 'item_records_api', type: :request do
     end
 
     it 'returns a single record' do
+      skip
       item = create(:item)
 
-      get "/api/v1/items/#{item.id}"
+      get "/api/v1/items/#{item.id}.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -42,7 +43,7 @@ RSpec.describe 'item_records_api', type: :request do
     it 'returns a find using id' do
       item = create(:item, name: 'Shovel')
 
-      get '/api/v1/items/find', params: {id: item.id}
+      get '/api/v1/items/find.json', params: {id: item.id}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -52,7 +53,7 @@ RSpec.describe 'item_records_api', type: :request do
     it 'returns a find using name' do
       item = create(:item, name: 'Shovel')
 
-      get '/api/v1/items/find', params: {name: 'Shovel'}
+      get '/api/v1/items/find.json', params: {name: 'Shovel'}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -66,7 +67,7 @@ RSpec.describe 'item_records_api', type: :request do
         create(:item, name: 'Same Shovel')
       end
 
-      get '/api/v1/items/find_all', params: {name: 'Same Shovel'}
+      get '/api/v1/items/find_all.json', params: {name: 'Same Shovel'}
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)

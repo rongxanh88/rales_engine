@@ -36,11 +36,11 @@ Rails.application.routes.draw do
           get 'random',   to: 'items/random#show'
           get 'most_revenue', to: 'items/most_revenue#index'
           get 'most_items',   to: 'items/most_items#index'
-          get 'best_day',     to: 'items/best_day#show'
         end
       end
 
       resources :invoice_items, only: [:index, :show], :controller => "invoice_items/invoice_items" do
+        
         collection do
           get 'find_all', to: 'invoice_items/find#index'
           get 'find',     to: 'invoice_items/find#show'
