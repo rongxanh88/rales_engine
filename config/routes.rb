@@ -53,6 +53,8 @@ Rails.application.routes.draw do
 
       resources :customers, only: [:index, :show], :controller => "customers/customers" do
         get 'favorite_merchant', to: 'customers/favorite_merchant#show'
+        get 'invoices', to: 'customers/relationship#show'
+        get 'transactions', to: 'customers/relationship#index'
         collection do
           get 'find_all', to: 'customers/find#index'
           get 'find',     to: 'customers/find#show'
@@ -61,6 +63,7 @@ Rails.application.routes.draw do
       end
 
       resources :transactions, only: [:index, :show], :controller => "transactions/transactions" do
+        get "invoice", to: 'transactions/invoice#show'
         collection do
           get 'find_all', to: 'transactions/find#index'
           get 'find',     to: 'transactions/find#show'
