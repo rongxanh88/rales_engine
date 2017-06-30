@@ -12,7 +12,7 @@ RSpec.describe "merchant relationships api", type: :request do
       create(:invoice_item, item_id: item_2.id, invoice_id: invoice.id)
       create(:invoice_item, item_id: item_3.id, invoice_id: invoice.id)
 
-      get "/api/v1/merchants/#{merchant.id}/items"
+      get "/api/v1/merchants/#{merchant.id}/items.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -27,7 +27,7 @@ RSpec.describe "merchant relationships api", type: :request do
       invoice_2 = create(:invoice, merchant_id: merchant.id)
       invoice_3 = create(:invoice, merchant_id: merchant.id)
 
-      get "/api/v1/merchants/#{merchant.id}/invoices"
+      get "/api/v1/merchants/#{merchant.id}/invoices.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)

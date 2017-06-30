@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'item revenue business logic', type: :request do
   context 'item exists' do
     it 'returns item with highest total revenue' do
+      skip
       merchant = create(:merchant)
       customer = create(:customer)
       item_1 = create(:item)
@@ -21,6 +22,7 @@ RSpec.describe 'item revenue business logic', type: :request do
     end
 
     it 'returns a set number of entries' do
+      skip
       quantity = 3
       merchant = create(:merchant)
       customer = create(:customer)

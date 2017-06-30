@@ -8,7 +8,7 @@ RSpec.describe "customer relationships api", type: :request do
       invoice_2 = create(:invoice, customer_id: customer.id)
       invoice_3 = create(:invoice, customer_id: customer.id)
 
-      get "/api/v1/customers/#{customer.id}/invoices"
+      get "/api/v1/customers/#{customer.id}/invoices.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
@@ -23,7 +23,7 @@ RSpec.describe "customer relationships api", type: :request do
       transaction_1 = create(:transaction, invoice_id: invoice.id)
       transaction_2 = create(:transaction, invoice_id: invoice.id, result: "failed")
 
-      get "/api/v1/customers/#{customer.id}/transactions"
+      get "/api/v1/customers/#{customer.id}/transactions.json"
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
