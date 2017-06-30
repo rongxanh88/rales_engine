@@ -19,6 +19,7 @@ group :development, :test do
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
+  gem 'simplecov'
 end
 
 group :development do

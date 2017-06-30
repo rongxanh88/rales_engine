@@ -22,7 +22,7 @@ RSpec.describe 'invoices_itens_records_api', type: :request do
       result = JSON.parse(response.body)
 
       expect(response).to have_http_status(200)
-      expect(result["unit_price"]).to eq(invoice_item.unit_price)
+      expect(result["id"]).to eq(invoice_item.id)
     end
 
     it 'returns a random record' do
