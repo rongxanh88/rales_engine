@@ -1,0 +1,1 @@
+json.(@invoice.merchant, :id, :name)

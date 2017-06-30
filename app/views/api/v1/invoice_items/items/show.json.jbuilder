@@ -1,0 +1,1 @@
+json.(@invoice_item.item, :id, :name, :description, :unit_price, :merchant_id)
