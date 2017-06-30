@@ -1,9 +1,5 @@
-class Api::V1::Items::MostRevenueController < ApplicationController
+class Api::V1::Merchants::MostRevenueController < ApplicationController
   def index
-    if params[:quantity]
-      @revenue = Merchant.top_revenue(params[:quantity])
-    else
-      @revenue = Merchant.top_revenue
-    end
+    @revenue = Merchant.top_revenue(params[:quantity])
   end
 end

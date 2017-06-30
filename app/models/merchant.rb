@@ -40,16 +40,14 @@ class Merchant < ApplicationRecord
     ).order("invoices.items_sold DESC")
   end
 
-  def self.top_revenue(quantity = 1)
+  def self.top_revenue(quantity = 10)
     Merchant.joins(
       "INNER JOIN (" +
       Invoice.joins(:transactions, :invoice_items).where(transactions: {result: 'success'})
       .select("invoices.merchant_id, sum(invoice_items.quantity*invoice_items.unit_price::numeric)/100 AS total_revenue")
       .group("invoices.merchant_id")
       .order("total_revenue DESC")
-      .limit(quantity)
-      .to_sql +
-      ") merchant_revenues ON merchant_revenues.merchant_id = merchants.id")
+      .limit(quantity).to_sql + ") merchant_revenues ON merchant_revenues.merchant_id = merchants.id")
       .select("merchant_revenues.total_revenue, merchants.*")
   end
 end

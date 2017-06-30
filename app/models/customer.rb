@@ -2,6 +2,7 @@ class Customer < ApplicationRecord
   validates :first_name, :last_name, presence: true
 
   has_many :invoices
+  has_many :transactions, through: :invoices
 
   def self.favorite_merchant(customer_id)
     Merchant.joins(
