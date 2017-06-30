@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "customer relationships api", type: :request do
+RSpec.describe "merchant relationships api", type: :request do
   context "when the records exist" do
     it "returns all items" do
       merchant = create(:merchant)
